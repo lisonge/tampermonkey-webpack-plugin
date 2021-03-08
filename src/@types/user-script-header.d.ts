@@ -2,25 +2,28 @@
  * @Date: 2021-03-06 17:12:50
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-07 01:57:02
+ * @LastEditTime: 2021-03-08 21:48:42
  */
 
 export type IArray<T> = T | T[];
 
-export type LocaleValue = IArray<{
-  locale?: string;
-  value: string;
-}>;
+export type LocaleType = [
+  string,
+  ...{
+    value: string;
+    locale: string;
+  }[]
+];
 
 /**
  * @see <https://www.tampermonkey.net/documentation.php>
  */
 export interface UserScriptHeader {
-  name: string | LocaleValue;
+  name: string | LocaleType;
   namespace: string;
   version: string;
   author: string;
-  description?: string | LocaleValue;
+  description?: string | LocaleType;
   homepage?: string;
   homepageURL?: string;
   website?: string;
@@ -83,5 +86,12 @@ export interface UserScriptHeader {
     description: string;
   }>;
   noframes?: true;
-  // [key: string]: string;
+  /**
+   * extra data not belonging to tampermonkey
+   */
+  externals?: [string, ...string[]][];
 }
+
+type Options = {
+  // TODO
+};

@@ -1,11 +1,16 @@
 {
   "name": "tampermonkey-webpack-plugin",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "tampermonkey-webpack-plugin",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "compile": "tsc -p ./",
     "test:compile": "cd ./test && webpack --progress --color && cd ../"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisonge/tampermonkey-webpack-plugin.git"
   },
   "keywords": [
     "webpack",
@@ -20,7 +25,10 @@
     "ts-loader": "^8.0.17",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3",
-    "webpack": "^5.24.3",
     "webpack-cli": "^4.5.0"
+  },
+  "dependencies": {
+    "webpack-sources": "^2.2.0",
+    "webpack": "^5.24.3"
   }
 }

@@ -2,18 +2,18 @@
  * @Date: 2021-03-06 15:44:21
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-07 02:00:23
+ * @LastEditTime: 2021-03-08 22:39:44
  */
 
 import path from 'path';
 import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { TampermonkeyWebpackPlugin } from '../src/index';
+import config from './tampermonkey.config';
 export default {
   entry: './entry.ts',
-  devtool: false,
+  devtool: 'inline-source-map',
   mode: 'production',
-  target: 'node',
   module: {
     rules: [
       {
@@ -29,19 +29,10 @@ export default {
   },
   output: {
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
     path: path.resolve(__dirname, 'dist'),
   },
   optimization: {
     minimize: false,
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new TampermonkeyWebpackPlugin({
-      author: 'lisonge',
-      name: [{ value: 'name' }, { value: '名字', locale: 'zh' }],
-      namespace: 'namespace',
-      version: '1.0.0',
-    }),
-  ],
+  plugins: [new CleanWebpackPlugin(), new TampermonkeyWebpackPlugin(config)],
 } as Configuration;

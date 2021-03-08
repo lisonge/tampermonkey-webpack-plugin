@@ -2,10 +2,11 @@
  * @Date: 2021-03-07 01:51:03
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-07 01:56:44
+ * @LastEditTime: 2021-03-09 00:24:24
  */
 
-import { TampermonkeyWebpackPlugin,UserScriptHeader } from '../src/index';
+import { TampermonkeyWebpackPlugin, UserScriptHeader } from '../src/index';
+// import{} from '../index'
 
 type IArray<T> = T | T[];
 
@@ -30,7 +31,7 @@ test({
   version: '1.0.0',
 });
 test2({
-  name: { value: '' },
+  name: `{ value: '' }`,
   author: 'lisonge',
   namespace: 'namespace',
   version: '1.0.0',
@@ -41,3 +42,6 @@ test2({
 //   namespace: 'namespace',
 //   version: '1.0.0',
 // })
+
+// 宽字符
+// abcdef
