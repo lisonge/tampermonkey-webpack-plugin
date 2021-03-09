@@ -2,9 +2,9 @@
  * @Date: 2021-03-07 12:01:25
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-08 21:56:14
+ * @LastEditTime: 2021-03-09 15:30:33
  */
-import { UserScriptHeader } from '../src/index';
+import { UserScriptHeader } from '../../index';
 
 const h: UserScriptHeader = {
   author: 'lisonge',

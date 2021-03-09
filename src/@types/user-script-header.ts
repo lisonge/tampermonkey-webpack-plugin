@@ -2,7 +2,7 @@
  * @Date: 2021-03-06 17:12:50
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-08 21:48:42
+ * @LastEditTime: 2021-03-09 15:29:33
  */
 
 export type IArray<T> = T | T[];
@@ -52,7 +52,7 @@ export interface UserScriptHeader {
     | 'document-end'
     | 'document-idle'
     | 'context-menu';
-  grant?: ?IArray<
+  grant?: IArray<
     | 'unsafeWindow'
     | 'window.close'
     | 'window.focus'
@@ -79,7 +79,7 @@ export interface UserScriptHeader {
     | 'GM_notification'
     | 'GM_setClipboard'
     | 'GM_info'
-  >;
+  > | null;
   antifeature?: IArray<{
     tag: string;
     type: 'ads' | 'tracking' | 'miner';
@@ -92,6 +92,6 @@ export interface UserScriptHeader {
   externals?: [string, ...string[]][];
 }
 
-type Options = {
+export type Options = {
   // TODO
 };

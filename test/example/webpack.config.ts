@@ -2,16 +2,16 @@
  * @Date: 2021-03-06 15:44:21
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-08 22:39:44
+ * @LastEditTime: 2021-03-09 15:30:44
  */
 
 import path from 'path';
 import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import { TampermonkeyWebpackPlugin } from '../src/index';
+import { TampermonkeyWebpackPlugin } from '../../index';
 import config from './tampermonkey.config';
 export default {
-  entry: './entry.ts',
+  entry: './src/index.ts',
   devtool: 'inline-source-map',
   mode: 'production',
   module: {
