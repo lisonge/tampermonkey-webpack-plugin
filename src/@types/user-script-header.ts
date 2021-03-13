@@ -2,17 +2,23 @@
  * @Date: 2021-03-06 17:12:50
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-13 15:41:24
+ * @LastEditTime: 2021-03-13 18:08:42
  */
 
 export type IArray<T> = T | T[];
 
+/**
+ * @example <caption>Example //@tag:zh value</caption>
+ * {locale: 'zh', value: 'value';};
+ * // or
+ * ['zh', 'value']
+ */
 export type LocaleType = [
   string,
   ...(
     | {
-        value: string;
         locale: string;
+        value: string;
       }[]
     | [string, string][]
   )
@@ -55,10 +61,10 @@ export interface UserScriptHeader {
     | 'document-end'
     | 'document-idle'
     | 'context-menu';
-    /**
-     * @example <caption>Example //@grant  none</caption>
-     * grant:null
-     */
+  /**
+   * @example <caption>Example //@grant  none</caption>
+   * grant:null
+   */
   grant?: IArray<
     | 'unsafeWindow'
     | 'window.close'
