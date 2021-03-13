@@ -2,44 +2,61 @@
  * @Date: 2021-03-06 15:48:06
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-09 14:28:08
+ * @LastEditTime: 2021-03-13 16:24:44
  */
-import { Compiler, Compilation } from 'webpack';
-import { ConcatSource } from 'webpack-sources';
-import {
-  UserScriptHeader,
-  Options,
-} from './@types/user-script-header';
-import { stringify } from './util';
+import { Compiler, sources } from 'webpack';
+import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import { UserScriptHeader, Options } from './@types/user-script-header';
+import { buildHotScript, stringify } from './util';
 
 class TampermonkeyWebpackPlugin {
   private h: UserScriptHeader;
   private o?: Options;
-  constructor(config: UserScriptHeader, options?: Options) {
-    this.h = config;
+  constructor(header: UserScriptHeader, options?: Options) {
+    this.h = header;
     this.o = options;
   }
   apply(compiler: Compiler) {
-    compiler.hooks.compilation.tap(
+    compiler.hooks.afterCompile.tapPromise(
       'TampermonkeyWebpackPlugin',
-      (compilation) => {
-        compilation.hooks.processAssets.tap(
-          {
-            name: 'TampermonkeyWebpackPlugin',
-            stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
-          },
-          () => {
-            for (const chunk of compilation.chunks) {
-              for (const file of chunk.files) {
-                compilation.updateAsset(
-                  file,
-                  // @ts-ignore
-                  (old) => new ConcatSource(stringify(this.h), '\n\n', old)
+      async (compilation) => {
+        const { mode } = compiler.options;
+        if (mode == 'production') {
+          for (const chunk of compilation.chunks) {
+            if (!chunk.canBeInitial()) {
+              continue;
+            }
+            for (const file of chunk.files) {
+              compilation.updateAsset(file, (old) => {
+                return new sources.ConcatSource(
+                  stringify(this.h, this.o?.minAlignSpace),
+                  '\n\n',
+                  old
                 );
-              }
+              });
             }
           }
-        );
+        } else if (mode == 'development') {
+          let { host, port, filename } = compilation.options
+            .devServer as WebpackDevServerConfiguration;
+          filename = filename ?? 'index.js';
+          host = host ?? '127.0.0.1';
+          port = port ?? 8080;
+          if (host == '0.0.0.0') {
+            host = '127.0.0.1';
+          }
+          let proxyUserJsFileName =
+            this.o?.devServer?.proxyUserJsFileName ?? 'dev-server.user.js';
+          compilation.assets[proxyUserJsFileName] = new sources.RawSource(
+            [
+              stringify(this.h),
+              '\n\n',
+              buildHotScript(`http://${host}:${port}/${filename}`),
+            ].join('')
+          );
+          const u = `http://${host}:${port}/${proxyUserJsFileName}`;
+          compilation.logger.info('install dev-server script', u);
+        }
       }
     );
   }

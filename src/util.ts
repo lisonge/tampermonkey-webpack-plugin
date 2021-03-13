@@ -2,7 +2,7 @@
  * @Date: 2021-03-06 22:03:13
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-08 22:29:21
+ * @LastEditTime: 2021-03-13 16:24:34
  */
 import {
   UserScriptHeader,
@@ -20,7 +20,12 @@ function convertLocaleText(
     v: value[0],
   });
   for (const el of value) {
-    if (typeof el != 'string') {
+    if (el instanceof Array) {
+      kvArray.push({
+        k: `${key}:${el[0]}`,
+        v: el[1],
+      });
+    } else if (el instanceof Object) {
       kvArray.push({
         k: `${key}:${el.locale}`,
         v: el.value,
@@ -47,7 +52,16 @@ function convertRegExpText(
 
 const headerStart = '==UserScript==';
 const headerStop = '==/UserScript==';
-export function stringify(ush: UserScriptHeader): string {
+/**
+ *
+ * @param ush
+ * @param minAlignSpace default 4
+ * @returns
+ */
+export function stringify(
+  ush: UserScriptHeader,
+  minAlignSpace: number = 4
+): string {
   const {
     name,
     description,
@@ -111,8 +125,8 @@ export function stringify(ush: UserScriptHeader): string {
   for (const k in ush) {
     // @ts-ignore
     const v = ush[k];
-    if (typeof v == 'string') {
-      kvArray.push({ k, v });
+    if (typeof v == 'string' || v instanceof RegExp) {
+      kvArray.push({ k, v: String(v) });
     }
   }
   for (const k of ush.externals ?? []) {
@@ -132,10 +146,9 @@ export function stringify(ush: UserScriptHeader): string {
   textLineArray.forEach((el) => {
     el[0] += multipleChar('\x20', maxLen - el[0].length);
   });
-  const minCharSpace = 4;
   return [
     headerStart,
-    ...textLineArray.map((el) => el.join(multipleChar('\x20', minCharSpace))),
+    ...textLineArray.map((el) => el.join(multipleChar('\x20', minAlignSpace))),
     headerStop,
   ]
     .map((v) => `//\x20` + v)
@@ -144,3 +157,37 @@ export function stringify(ush: UserScriptHeader): string {
 
 export const multipleChar = (char: string, count: number) =>
   Array(count).fill(char).join('');
+
+export function buildHotScript(entryUrl: string) {
+  return `/* eslint-disable */ /* spell-checker: disable */
+(async function () {
+  'use strict';
+  const uniqueKey = Math.random().toString(16);
+  const entryUrl = '${entryUrl}';
+  Object.defineProperty(self, 'webpackHotUpdate', {
+    set(v) {
+      self[uniqueKey] = v;
+      Object.assign(document, {
+        webpackHotUpdate: v,
+      });
+      const script = document.createElement('script');
+      script.id = Math.random().toString(16);
+      script.innerHTML = \`(async function () {
+        if(self[\${uniqueKey}] == undefined){
+          self.webpackHotUpdate = document.webpackHotUpdate;
+        }
+        const script = document.getElementById('\${script.id}');
+        script.parentElement.removeChild(script);
+      })();\`;
+      document.appendChild(script);
+    },
+    get() {
+      return self[uniqueKey];
+    },
+  });
+  const resp = await fetch(entryUrl);
+  if (resp.ok) {
+    eval(await resp.text());
+  }
+})();`;
+}

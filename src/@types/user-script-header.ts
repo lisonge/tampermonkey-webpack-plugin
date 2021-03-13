@@ -2,17 +2,20 @@
  * @Date: 2021-03-06 17:12:50
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-09 15:29:33
+ * @LastEditTime: 2021-03-13 15:41:24
  */
 
 export type IArray<T> = T | T[];
 
 export type LocaleType = [
   string,
-  ...{
-    value: string;
-    locale: string;
-  }[]
+  ...(
+    | {
+        value: string;
+        locale: string;
+      }[]
+    | [string, string][]
+  )
 ];
 
 /**
@@ -52,6 +55,10 @@ export interface UserScriptHeader {
     | 'document-end'
     | 'document-idle'
     | 'context-menu';
+    /**
+     * @example <caption>Example //@grant  none</caption>
+     * grant:null
+     */
   grant?: IArray<
     | 'unsafeWindow'
     | 'window.close'
@@ -93,5 +100,15 @@ export interface UserScriptHeader {
 }
 
 export type Options = {
-  // TODO
+  /**
+   * @default 4
+   */
+  minAlignSpace?: number;
+  devServer?: {
+    /**
+     *  Extension Name should be <.user.js>
+     * @default `dev-server.user.js`
+     */
+    proxyUserJsFileName?: string;
+  };
 };
