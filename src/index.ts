@@ -2,7 +2,7 @@
  * @Date: 2021-03-06 15:48:06
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-13 16:24:44
+ * @LastEditTime: 2021-03-14 09:58:47
  */
 import { Compiler, sources } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
@@ -10,13 +10,12 @@ import { UserScriptHeader, Options } from './@types/user-script-header';
 import { buildHotScript, stringify } from './util';
 
 class TampermonkeyWebpackPlugin {
-  private h: UserScriptHeader;
-  private o?: Options;
-  constructor(header: UserScriptHeader, options?: Options) {
-    this.h = header;
+  private o: Options;
+  constructor(options: Options) {
     this.o = options;
   }
   apply(compiler: Compiler) {
+    const { header } = this.o;
     compiler.hooks.afterCompile.tapPromise(
       'TampermonkeyWebpackPlugin',
       async (compilation) => {
@@ -29,7 +28,7 @@ class TampermonkeyWebpackPlugin {
             for (const file of chunk.files) {
               compilation.updateAsset(file, (old) => {
                 return new sources.ConcatSource(
-                  stringify(this.h, this.o?.minAlignSpace),
+                  stringify(header, this.o?.minAlignSpace),
                   '\n\n',
                   old
                 );
@@ -49,7 +48,7 @@ class TampermonkeyWebpackPlugin {
             this.o?.devServer?.proxyUserJsFileName ?? 'dev-server.user.js';
           compilation.assets[proxyUserJsFileName] = new sources.RawSource(
             [
-              stringify(this.h),
+              stringify(header),
               '\n\n',
               buildHotScript(`http://${host}:${port}/${filename}`),
             ].join('')

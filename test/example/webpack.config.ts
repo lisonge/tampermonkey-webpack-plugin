@@ -2,7 +2,7 @@
  * @Date: 2021-03-06 15:44:21
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-13 15:36:41
+ * @LastEditTime: 2021-03-14 10:00:47
  */
 
 import path from 'path';
@@ -10,7 +10,7 @@ import { Configuration } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { TampermonkeyWebpackPlugin } from '../../src/index';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
-import { header } from './tampermonkey.config';
+import tampermonkeyOptions from './tampermonkey.config';
 
 export default {
   entry: './src/index.ts',
@@ -37,16 +37,19 @@ export default {
   optimization: {
     minimize: false,
   },
-  plugins: [new CleanWebpackPlugin(), new TampermonkeyWebpackPlugin(header)],
+  plugins: [
+    new CleanWebpackPlugin(),
+    new TampermonkeyWebpackPlugin(tampermonkeyOptions),
+  ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    // contentBase: path.join(__dirname, 'dist'),
     // open: true,
     host: '127.0.0.1',
     port: 8080,
     filename: 'index.js',
     // hot: true,
     // hotOnly: true,
-    compress: false,
+    // compress: false,
     disableHostCheck: true,
     headers: {
       'Access-Control-Allow-Origin': '*',

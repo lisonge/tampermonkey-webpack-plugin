@@ -2,14 +2,14 @@
  * @Date: 2021-03-06 17:12:50
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-13 18:08:42
+ * @LastEditTime: 2021-03-14 09:56:44
  */
 
 export type IArray<T> = T | T[];
 
 /**
  * @example <caption>Example //@tag:zh value</caption>
- * {locale: 'zh', value: 'value';};
+ * {locale: 'zh', value: 'value'}
  * // or
  * ['zh', 'value']
  */
@@ -106,6 +106,7 @@ export interface UserScriptHeader {
 }
 
 export type Options = {
+  header: UserScriptHeader;
   /**
    * @default 4
    */
