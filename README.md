@@ -2,7 +2,7 @@
  * @Date: 2021-03-09 14:10:07
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-14 13:48:56
+ * @LastEditTime: 2021-03-14 13:51:18
 -->
 
 # tampermonkey-webpack-plugin
@@ -54,8 +54,6 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { TampermonkeyWebpackPlugin } from 'tampermonkey-webpack-plugin';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 
-const mode = process.env.NODE_ENV as 'production' | 'development';
-const isDev = mode == 'development';
 
 export default {
   devtool: 'inline-source-map', // necessary
