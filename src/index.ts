@@ -2,7 +2,7 @@
  * @Date: 2021-03-06 15:48:06
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-14 13:45:06
+ * @LastEditTime: 2021-03-14 13:57:41
  */
 import { Compiler, sources } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
@@ -45,7 +45,7 @@ class TampermonkeyWebpackPlugin {
             host = '127.0.0.1';
           }
           let proxyUserJsFileName =
-            this.o?.devServer?.proxyUserJsFileName ?? 'dev-server.user.js';
+            this.o?.devServer?.proxyUserJsFileName ?? 'dev-server-proxy.user.js';
           compilation.assets[proxyUserJsFileName] = new sources.RawSource(
             [
               stringify(header),

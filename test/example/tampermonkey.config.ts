@@ -2,7 +2,7 @@
  * @Date: 2021-03-07 12:01:25
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-14 10:42:49
+ * @LastEditTime: 2021-03-14 13:58:18
  */
 import { Options } from '../../src/index';
 
@@ -20,6 +20,6 @@ export default {
     externals: [['tag', 'value']],
   },
   devServer: {
-    proxyUserJsFileName: 'dev-server.user.js',
+    proxyUserJsFileName: 'dev-server-proxy.user.js',
   },
 } as Options;
