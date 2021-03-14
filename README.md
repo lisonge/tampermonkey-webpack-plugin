@@ -2,7 +2,7 @@
  * @Date: 2021-03-09 14:10:07
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-14 13:51:18
+ * @LastEditTime: 2021-03-14 13:52:49
 -->
 
 # tampermonkey-webpack-plugin
@@ -102,7 +102,7 @@ export default {
 npx webpack serve --mode=development --config webpack.config.ts
 ```
 
-your console will log [proxy script url]
+your console will log `proxy script url`
 
 if the url end with '.user.js', visit it in the browser address bar
 
