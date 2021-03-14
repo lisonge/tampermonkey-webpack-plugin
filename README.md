@@ -2,7 +2,7 @@
  * @Date: 2021-03-09 14:10:07
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-14 13:59:42
+ * @LastEditTime: 2021-03-14 17:35:21
 -->
 
 # tampermonkey-webpack-plugin
@@ -12,6 +12,8 @@
 - Code hot reload with webpack-dev-server
 
 - Full typescript support
+
+- or just use template <https://github.com/lisonge/tampermonkey-webpack-template.git>
 
 ## Installation
 
