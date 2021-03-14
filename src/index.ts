@@ -2,7 +2,7 @@
  * @Date: 2021-03-06 15:48:06
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-14 09:58:47
+ * @LastEditTime: 2021-03-14 13:45:06
  */
 import { Compiler, sources } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
@@ -54,7 +54,7 @@ class TampermonkeyWebpackPlugin {
             ].join('')
           );
           const u = `http://${host}:${port}/${proxyUserJsFileName}`;
-          compilation.logger.info('install dev-server script', u);
+          compilation.logger.info('pleace install dev-server proxy script', u);
         }
       }
     );

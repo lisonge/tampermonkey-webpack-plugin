@@ -2,7 +2,7 @@
  * @Date: 2021-03-07 12:01:25
  * @LastEditors: lisonge
  * @Author: lisonge
- * @LastEditTime: 2021-03-14 09:59:51
+ * @LastEditTime: 2021-03-14 10:42:49
  */
 import { Options } from '../../src/index';
 
@@ -18,5 +18,8 @@ export default {
     include: [/https:\/\/dev\.songe\.li.*/, 'https://dev.songe.li/*'],
     grant: ['unsafeWindow', 'GM_setValue', 'GM_setValue', 'GM_xmlhttpRequest'],
     externals: [['tag', 'value']],
+  },
+  devServer: {
+    proxyUserJsFileName: 'dev-server.user.js',
   },
 } as Options;
