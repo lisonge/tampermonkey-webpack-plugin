@@ -13,8 +13,6 @@
 
 - Full typescript support
 
-- or just use template <https://github.com/lisonge/tampermonkey-webpack-template.git>
-
 ## Installation
 
 ```shell
