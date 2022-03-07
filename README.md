@@ -5,6 +5,8 @@
  * @LastEditTime: 2021-03-14 17:35:21
 -->
 
+# deprecated,  suggested use <https://github.com/lisonge/vite-plugin-monkey.git>, it is better
+
 # tampermonkey-webpack-plugin
 
 - Insert UserScriptHeaderComment to output file
